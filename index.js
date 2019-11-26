@@ -1,6 +1,6 @@
 /*
  * WORLD MAP VISUALIZER
- * Author: <your name here>
+ * Author: <Tara Monheim>
  * ---------------------------
  *
  * Visualizing the world!
@@ -29,22 +29,39 @@ clearConsole()
 
 jimp.read('world.jpg', (err, map_image) => {
   if (err) throw err;
-  map_image.resize(100,50);
-  console.log(map_image.getPixelColor(0,0)); //gibt die Farbe des Pixels links oben zurück
-  writeCharacterToConsole('#',0,0); //schreibt ein # links oben in die Konsole
+  map_image.resize(100, 50);
+  //console.log(map_image.getPixelColor(0, 0)); //gibt die Farbe des Pixels links oben zurück
+  //writeCharacterToConsole('#', 0, 0); //schreibt ein # links oben in die Konsole
 
-  //----- Hier kommt euer Code hin -----
-  
-
-
+  /*1. eine boolean erschaffen, der die einzelnen Positionen der Karte berechnet und mit Hashtags
+  ersetzt */
+  //2. wenn ein Pixel an einer Stelle ist wird dieses mit einem Hashtag an genau der gleichen Position ersetzt
+  //3. Hierzu braucht man die Position des Pixels und die Größe der Console 
+  //4. Hierzu braucht man die X und Y Koordinate
+  //5. unsere Schleife muss den Schwarz und Weissraum auf dem Bild automatisch erkennen 
+  //6. if = schwarz ersetze mit Hashtag ; else if = ersetze es nicht und gehe zum nächsten Pixel
+  //7. wenn die Reihe durch ist springe eine Reihe runter 
+  //8. brauche Pixel for - Schleife in der Linien - for Schleife
+  const chalk = require('chalk');
+  for (let x = 0; x < 101; x++) {
+    for (let y = 0; y < 51; y++) {
+      //console.log(map_image.getPixelColor(x, y)); //um zu checken, wo welches Muster ist
+      if (map_image.getPixelColor(x, y) < 256) { //4294967295
+        writeCharacterToConsole(chalk.red('#'), x, y);
+      } else { //4294967295
+        writeCharacterToConsole(chalk.blue('#'), x, y);
+      }
+    }
+  }
 });
+
 
 
 
 //Vorerst nur ein Platzhalter
 setInterval(function () {
-    
-},1000);
+
+}, 1000);
 
 
 /*
@@ -59,6 +76,6 @@ function clearConsole () {
 }
 
 function writeCharacterToConsole (char, x, y) {
-  rl.cursorTo(process.stdout,x,y)
+  rl.cursorTo(process.stdout, x, y)
   process.stdout.write(char)
 }
