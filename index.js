@@ -23,26 +23,73 @@
  */
 
 const rl = require('readline')
+// eslint-disable-next-line no-unused-vars
 const jimp = require('jimp')
 
 clearConsole()
-
-jimp.read('world.jpg', (err, map_image) => {
+/*
+jimp.read('katzi.jpg', (err, map_image) => {
   if (err) throw err;
-  map_image.resize(100, 50);
-  //console.log(map_image.getPixelColor(0, 0)); //gibt die Farbe des Pixels links oben zurück
-  //writeCharacterToConsole('#', 0, 0); //schreibt ein # links oben in die Konsole
+  map_image.resize(100, 50);*/
+//console.log(map_image.getPixelColor(0, 0)); //gibt die Farbe des Pixels links oben zurück
+//writeCharacterToConsole('#', 0, 0); //schreibt ein # links oben in die Konsole
 
-  /*1. eine boolean erschaffen, der die einzelnen Positionen der Karte berechnet und mit Hashtags
-  ersetzt */
-  //2. wenn ein Pixel an einer Stelle ist wird dieses mit einem Hashtag an genau der gleichen Position ersetzt
-  //3. Hierzu braucht man die Position des Pixels und die Größe der Console 
-  //4. Hierzu braucht man die X und Y Koordinate
-  //5. unsere Schleife muss den Schwarz und Weissraum auf dem Bild automatisch erkennen 
-  //6. if = schwarz ersetze mit Hashtag ; else if = ersetze es nicht und gehe zum nächsten Pixel
-  //7. wenn die Reihe durch ist springe eine Reihe runter 
-  //8. brauche Pixel for - Schleife in der Linien - for Schleife
-  const chalk = require('chalk');
+/*1. eine boolean erschaffen, der die einzelnen Positionen der Karte berechnet und mit Hashtags
+ersetzt */
+//2. wenn ein Pixel an einer Stelle ist wird dieses mit einem Hashtag an genau der gleichen Position ersetzt
+//3. Hierzu braucht man die Position des Pixels und die Größe der Console 
+//4. Hierzu braucht man die X und Y Koordinate
+//5. unsere Schleife muss den Schwarz und Weissraum auf dem Bild automatisch erkennen 
+//6. if = schwarz ersetze mit Hashtag ; else if = ersetze es nicht und gehe zum nächsten Pixel
+//7. wenn die Reihe durch ist springe eine Reihe runter 
+//8. brauche Pixel for - Schleife in der Linien - for Schleife
+/*const chalk = require('chalk');
+  for (let x = 0; x < 100; x++) {
+    for (let y = 0; y < 50; y++) {
+
+      const color = jimp.intToRGBA(map_image.getPixelColor(x, y));
+      writeCharacterToConsole(chalk.rgb(color.r, color.g, color.b)('##'), x, y);
+    }
+  }
+});*/
+
+const chalk = require('chalk');
+function generateInvader (width, height,xpos,ypos) {
+  /*1. um den Spaceinvader zu generieren brauche ich eine Funktion,
+  die in Pixelschritten auf meiner x und y Achseç
+  läuft, innerhalb meines vorgegebenen Rahmens (width, height).*/
+  for (let x = 0; x < width; x++) {
+    for (let y = 0; y < height; y++) {
+      let random = Math.random();
+      const hue = Math.random() * 360;
+      let r = Math.floor(Math.random() * 100);
+      let g = Math.floor(Math.random() * 100);
+      /*let r = Math.floor(Math.random() * 256);
+      let g = Math.floor(Math.random() * 256);
+      let b = Math.floor(Math.random() * 256);*/
+      if (random <= 0.5) {
+        writeCharacterToConsole(chalk.hsv(hue,r,g)('™'), x + xpos, y + ypos);
+        writeCharacterToConsole(chalk.hsv(hue,r,g)('™'), width * 2 - x + xpos,y + ypos) //spiegelverkehrt deswegen kann man nicht addieren von der Grenze aus
+      }
+    }
+  } //generiert Zufallszahlen zwischen 0 und 1 - 0.5 Grenze kleiner = schwarz größer = weiß 
+}
+//2. Wenn die Reihe durchgelaufen ist springt sie eine Zeile runter.
+
+console.log(chalk.hsv(32,100,100).inverse('hello'));
+//3. Diese Angaben (W, H) kann man ändern.
+
+
+//4. Das Bild wird an der y - Achse gespiegelt. 
+
+
+//5. Hierzu brauche ich eine Funktion die zufällig schwarze Pixel generiert.
+
+
+
+
+
+/*const chalk = require('chalk');
   for (let x = 0; x < 101; x++) {
     for (let y = 0; y < 51; y++) {
       //console.log(map_image.getPixelColor(x, y)); //um zu checken, wo welches Muster ist
@@ -57,12 +104,15 @@ jimp.read('world.jpg', (err, map_image) => {
 
 
 
-
+*/
 //Vorerst nur ein Platzhalter
 setInterval(function () {
+  const xpos = Math.floor(Math.random() * 40);
+  const ypos = Math.floor(Math.random() * 40);
+  clearConsole()
+  generateInvader(10, 6, xpos, ypos);
 
-}, 1000);
-
+}, 100);
 
 /*
  * HELPER FUNCTIONS - DO NOT CHANGE
