@@ -54,11 +54,14 @@ ersetzt */
 });*/
 
 const chalk = require('chalk');
-function generateInvader (width, height,xpos,ypos) {
+let invader = [];
+
+function generateInvader (width, height, xpos, ypos) {
   /*1. um den Spaceinvader zu generieren brauche ich eine Funktion,
   die in Pixelschritten auf meiner x und y Achseç
   läuft, innerhalb meines vorgegebenen Rahmens (width, height).*/
   for (let x = 0; x < width; x++) {
+    invader[x] = [];
     for (let y = 0; y < height; y++) {
       let random = Math.random();
       const hue = Math.random() * 360;
@@ -67,27 +70,30 @@ function generateInvader (width, height,xpos,ypos) {
       /*let r = Math.floor(Math.random() * 256);
       let g = Math.floor(Math.random() * 256);
       let b = Math.floor(Math.random() * 256);*/
+
       if (random <= 0.5) {
-        writeCharacterToConsole(chalk.hsv(hue,r,g)('™'), x + xpos, y + ypos);
-        writeCharacterToConsole(chalk.hsv(hue,r,g)('™'), width * 2 - x + xpos,y + ypos) //spiegelverkehrt deswegen kann man nicht addieren von der Grenze aus
+        writeCharacterToConsole(chalk.hsv(hue, r, g)('■'), x + xpos, y + ypos);
+        writeCharacterToConsole(chalk.hsv(hue, r, g)('■'), width * 2 - x + xpos, y + ypos); //spiegelverkehrt deswegen kann man nicht addieren von der Grenze aus
+        rl.cursorTo(process.studout, 0, 0)
+        invader[x][y] = 1
+
+      } else {
+        invader[x][y] = 0
       }
     }
-  } //generiert Zufallszahlen zwischen 0 und 1 - 0.5 Grenze kleiner = schwarz größer = weiß 
+  }
 }
+
+//return invader;
+//generiert Zufallszahlen zwischen 0 und 1 - 0.5 Grenze kleiner = schwarz größer = weiß 
+
 //2. Wenn die Reihe durchgelaufen ist springt sie eine Zeile runter.
 
-console.log(chalk.hsv(32,100,100).inverse('hello'));
 //3. Diese Angaben (W, H) kann man ändern.
-
 
 //4. Das Bild wird an der y - Achse gespiegelt. 
 
-
 //5. Hierzu brauche ich eine Funktion die zufällig schwarze Pixel generiert.
-
-
-
-
 
 /*const chalk = require('chalk');
   for (let x = 0; x < 101; x++) {
@@ -102,8 +108,6 @@ console.log(chalk.hsv(32,100,100).inverse('hello'));
   }
 });
 
-
-
 */
 //Vorerst nur ein Platzhalter
 setInterval(function () {
@@ -112,7 +116,7 @@ setInterval(function () {
   clearConsole()
   generateInvader(10, 6, xpos, ypos);
 
-}, 100);
+}, 1000);
 
 /*
  * HELPER FUNCTIONS - DO NOT CHANGE
@@ -129,3 +133,10 @@ function writeCharacterToConsole (char, x, y) {
   rl.cursorTo(process.stdout, x, y)
   process.stdout.write(char)
 }
+
+// let arrayPixels = []
+// arrayPixels[0] = []
+//arrayPixels[0][0] = 1
+//arrayPixels[1][2] = 1
+//arrayPixels[0][2] = 1
+// x und y Werte darein setzten 
